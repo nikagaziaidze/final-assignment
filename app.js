@@ -1,7 +1,10 @@
 // HERO IMAGE SLIDER //
 
-const heroImages = ["./images/profile1.jpeg"];
-
+const heroImages = [
+  "./images/profile1.jpeg",
+  "./images/profile2.jpeg",
+  "./images/profile3.jpeg",
+];
 const heroImage = document.getElementById("heroImage");
 
 let currentHeroImage = 0;
@@ -27,7 +30,7 @@ menuButton.addEventListener("click", function () {
   navigation.classList.toggle("show");
 });
 
-// მენიუზე დაჭერის შემდეგ მენიუ დაიხუროს
+// მენიუზე დაჭერის შემდეგ მენიუ დაიხუროს //
 
 const navigationLinks = document.querySelectorAll(".navigation a");
 
@@ -36,3 +39,28 @@ navigationLinks.forEach(function (link) {
     navigation.classList.remove("show");
   });
 });
+
+// ABOUT - PROGRESS BARS //
+
+const aboutSection = document.getElementById("about");
+const progressBars = document.querySelectorAll(".progress-bar");
+
+let progressStarted = false;
+
+function animateProgressBars() {
+  const sectionPosition = aboutSection.getBoundingClientRect().top;
+
+  const screenPosition = window.innerHeight * 0.75;
+
+  if (sectionPosition < screenPosition && !progressStarted) {
+    progressBars.forEach(function (bar) {
+      const width = bar.dataset.width;
+
+      bar.style.width = width + "%";
+    });
+
+    progressStarted = true;
+  }
+}
+
+window.addEventListener("scroll", animateProgressBars);
