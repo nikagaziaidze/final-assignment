@@ -64,3 +64,59 @@ function animateProgressBars() {
 }
 
 window.addEventListener("scroll", animateProgressBars);
+
+// PROJECT FILTER
+
+const filterButtons = document.querySelectorAll(".filter-button");
+
+const projectCards = document.querySelectorAll(".project-card");
+
+filterButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    filterButtons.forEach(function (btn) {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const selectedCategory = button.dataset.filter;
+
+    projectCards.forEach(function (project) {
+      const projectCategory = project.dataset.category;
+
+      if (selectedCategory === "all" || selectedCategory === projectCategory) {
+        project.style.display = "block";
+      } else {
+        project.style.display = "none";
+      }
+    });
+  });
+});
+
+// TESTIMONIAL SLIDER
+
+const testimonialSlides = document.querySelectorAll(".testimonial-slide");
+
+const testimonialButtons = document.querySelectorAll(".testimonial-button");
+
+function showTestimonial(index) {
+  testimonialSlides.forEach(function (slide) {
+    slide.classList.remove("active");
+  });
+
+  testimonialButtons.forEach(function (button) {
+    button.classList.remove("active");
+  });
+
+  testimonialSlides[index].classList.add("active");
+
+  testimonialButtons[index].classList.add("active");
+}
+
+testimonialButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const slideIndex = Number(button.dataset.slide);
+
+    showTestimonial(slideIndex);
+  });
+});
