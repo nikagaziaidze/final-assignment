@@ -1,10 +1,6 @@
 // HERO IMAGE SLIDER //
 
-const heroImages = [
-  "./images/profile1.jpeg",
-  "./images/profile2.jpeg",
-  "./images/profile3.jpeg",
-];
+const heroImages = ["./images/profile1.jpeg", "./images/profile2.jpeg"];
 const heroImage = document.getElementById("heroImage");
 
 let currentHeroImage = 0;
@@ -119,4 +115,75 @@ testimonialButtons.forEach(function (button) {
 
     showTestimonial(slideIndex);
   });
+});
+// CONTACT FORM
+
+const contactForm = document.getElementById("contactForm");
+
+const successModal = document.getElementById("successModal");
+
+const modalClose = document.getElementById("modalClose");
+
+const modalButton = document.getElementById("modalButton");
+
+contactForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const formData = new FormData(contactForm);
+
+  const data = {
+    name: formData.get("name"),
+
+    email: formData.get("email"),
+
+    website: formData.get("website"),
+
+    message: formData.get("message"),
+  };
+
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    const result = await response.json();
+
+    console.log("Successfully sent:", result);
+
+    contactForm.reset();
+
+    successModal.classList.add("show");
+  } catch (error) {
+    console.error("Error:", error);
+
+    alert("Something went wrong. Please try again.");
+  }
+});
+
+// MODAL CLOSE
+
+modalClose.addEventListener("click", function () {
+  successModal.classList.remove("show");
+});
+
+modalButton.addEventListener("click", function () {
+  successModal.classList.remove("show");
+});
+
+// მოდალის გარეთ დაჭერაც ხურავს
+
+successModal.addEventListener("click", function (event) {
+  if (event.target === successModal) {
+    successModal.classList.remove("show");
+  }
 });
